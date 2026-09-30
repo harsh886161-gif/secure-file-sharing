@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Secure File Upload</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="page-container">
+
+        <section class="upload-card">
+
+            <div class="logo">
+                <span>⬆</span>
+            </div>
+
+            <h1>Upload Your File</h1>
+
+            <p class="subtitle">
+                Select a file and upload it securely.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="message {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <form
+                id="uploadForm"
+                action="{{ url_for('upload_file') }}"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+               <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                />
+
+                <input type="file"
+                       id="fileInput"
+                       name="file"
+                       required
+                >
+
+                <button type="submit">
+                    Upload File
+                </button>
+            </form>
+
+                {{ csrf_token() }}
+
+                <div class="file-area">
+
+                    <label
+                        for="fileInput"
+                        class="file-button"
+                    >
+                        Choose File
+                    </label>
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        name="file"
+                        required
+                    >
+
+                    <p id="fileName">
+                        No file selected
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="uploadButton"
+                    class="upload-button"
+                >
+                    Upload File
+                </button>
+
+
+                <div
+                    id="loading"
+                    class="loading hidden"
+                >
+                    Uploading...
+                </div>
+
+            </form>
+
+            <p class="security-note">
+                Your uploaded file is securely stored and is not
+                publicly accessible.
+            </p>
+
+        </section>
+
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
+
+</body>
+
+</html>
