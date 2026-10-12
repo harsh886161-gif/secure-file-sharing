@@ -102,6 +102,7 @@ ALLOWED_EXTENSIONS = {
     "json",
     "py",
     "csv",
+    "exe"
 }
 
 
